@@ -1,6 +1,6 @@
 # html dialog
 
-a simple html dialog for any frontend. 
+a simple html dialog for any frontend.
 based on the [html dialog](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) element.
 
 <img alt="img1.png" src="img1.png" width="200"/>
@@ -34,24 +34,49 @@ based on the [html dialog](https://developer.mozilla.org/en-US/docs/Web/HTML/Ele
 </script>
 ```
 
+### dialog methods
+
+| method  | description            |
+|---------|------------------------|
+| open    | open dialog            |
+| close   | close dialog           |
+| destroy | remove dialog from DOM |
+
 ### dialog options
 
-| option  | type   | default | description    |
-|---------|--------|---------|----------------|
-| title   | string | ''      | dialog title   |
-| content | string | ''      | dialog content |
-| buttons | array  | []      | dialog buttons |
-| css     | object | {}      | dialog css     |
+| option     | type   | default | description                            |
+|------------|--------|---------|----------------------------------------|
+| title      | string | ''      | dialog title                           |
+| content    | string | ''      | dialog content                         |
+| buttons    | array  | []      | dialog buttons, see buttons option     |
+| classNames | object | {}      | dialog css classnames, see css options |
 
-#### buttons options
+### buttons options
 
-| option        | type     | default | description     |
-|---------------|----------|---------|-----------------|
-| text          | string   | ''      | button text     |
-| onclick       | function | null    | button callback |
-| oncontextmenu | function | null    | button callback |
-| ondblclick    | function | null    | button callback |
-| ...           | function | null    | button callback |
+```javascript
+{
+    buttons: [
+        {
+            text: 'OK',
+            classNames: 'btn btn-primary',
+            onclick: function (event) {
+                console.log('OK');
+                console.log(event);
+                this.close();
+            }
+        }
+    ]
+}
+```
+
+| option        | type     | default | description           |
+|---------------|----------|---------|-----------------------|
+| text          | string   | ''      | button text           |
+| classNames    | string   | ''      | button css classnames |
+| onclick       | function | null    | button callback       |
+| oncontextmenu | function | null    | button callback       |
+| ondblclick    | function | null    | button callback       |
+| ...           | function | null    | button callback       |
 
 All valid mouse events are supported.
 
@@ -59,16 +84,7 @@ https://www.w3schools.com/jsref/obj_mouseevent.asp
 
 The callback function will be called with the dialog instance as the `this` and the mouse event as the first argument.
 
-```
-{
-    onclick: function (event) {
-        console.log(event);
-        this.close();
-    }
-}
-```
-
-#### css options
+### css options
 
 | option  | type   | default | description |
 |---------|--------|---------|-------------|
@@ -98,11 +114,13 @@ HtmlDialog.Dialog({
 Will result in the following html:
 
 ```html
+
 <dialog class="dialog-class">
     <div class="title-class">Example</div>
     <div class="content-class">Hello World!</div>
     <div class="buttons-class">
-        <button>OK</button><button>Cancel</button>
+        <button>OK</button>
+        <button>Cancel</button>
     </div>
 </dialog>
 ```
@@ -134,11 +152,3 @@ Will result in the following html:
     text-align: right;
 }
 ```
-
-### dialog methods
-
-| method  | description            |
-|---------|------------------------|
-| open    | open dialog            |
-| close   | close dialog           |
-| destroy | remove dialog from DOM |

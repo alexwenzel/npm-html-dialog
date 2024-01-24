@@ -25,7 +25,7 @@
             },
             {
                 text: 'Cancel',
-                onclick: function () {
+                onmouseup: function () {
                     alert('Cancel');
                     this.close();
                 }
@@ -76,6 +76,7 @@
         buttons: [
             {
                 text: 'OK',
+                classNames: 'ok-button-class',
                 onclick: function () {
                     this.close();
                 }
@@ -114,6 +115,11 @@
     .buttons-class {
         padding: 10px;
         text-align: right;
+    }
+    .ok-button-class {
+        background-color: green;
+        color: #fff;
+        margin-right: 10px;
     }
 </style>
 </body>

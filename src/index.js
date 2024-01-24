@@ -2,10 +2,10 @@
  * @param {String} title
  * @param {String} content
  * @param {Array} buttons
- * @param {Object} css
+ * @param {Object} classNames
  * @constructor
  */
-export function Dialog({title, content, buttons, css = {dialog: '', title: '', content: '', buttons: ''}}) {
+export function Dialog({title, content, buttons, css: classNames = {dialog: '', title: '', content: '', buttons: ''}}) {
 
     // check if all parameters are passed
     if (!title || !content || !buttons) {
@@ -17,17 +17,17 @@ export function Dialog({title, content, buttons, css = {dialog: '', title: '', c
     }
 
     const tpl = `
-        <div class="${css['title']}">${title}</div>
-        <div class="${css['content']}">${content}</div>
-        <div class="${css['buttons']}">
-            ${buttons.map(button => `<button>${button.text}</button>`).join('')}
+        <div class="${classNames['title']}">${title}</div>
+        <div class="${classNames['content']}">${content}</div>
+        <div class="${classNames['buttons']}">
+            ${buttons.map(button => `<button class="${button.classNames}">${button.text}</button>`).join('')}
         </div>
     `
 
     // create dialog element
     const dialogElement = document.createElement('dialog')
     dialogElement.id = randomId('html-dialog-')
-    dialogElement.className = css['dialog'] ?? ''
+    dialogElement.className = classNames['dialog'] ?? ''
     dialogElement.innerHTML = tpl
     document.body.appendChild(dialogElement)
     const dialog = document.querySelector(`#${dialogElement.id}`)
