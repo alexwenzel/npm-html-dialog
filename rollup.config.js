@@ -1,5 +1,5 @@
 import babel from 'rollup-plugin-babel';
-import resolve from '@rollup/plugin-node-resolve';
+import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import { terser } from 'rollup-plugin-terser';
 
@@ -17,7 +17,7 @@ export default {
         commonjs(),
         babel({
             exclude: 'node_modules/**',
-            presets: ['@babel/preset-env', '@babel/preset-react'],
+            presets: ['@babel/preset-env'],
         }),
         production && terser()
     ],

@@ -1,3 +1,63 @@
-export function Dialog() {
-    console.log("Dialog")
+/**
+ * @param {String} title
+ * @param {String} content
+ * @param {Array} buttons
+ * @param {Object} css
+ * @constructor
+ */
+export function Dialog({title, content, buttons, css = {dialog: '', title: '', content: '', buttons: ''}}) {
+
+    // check if all parameters are passed
+    if (!title || !content || !buttons) {
+        throw new Error('Missing parameters')
+    }
+
+    const randomId = (prefix) => {
+        return prefix + Math.random().toString(36).substr(2, 9)
+    }
+
+    const tpl = `
+        <div class="${css['title']}">${title}</div>
+        <div class="${css['content']}">${content}</div>
+        <div class="${css['buttons']}">
+            ${buttons.map(button => `<button>${button.text}</button>`).join('')}
+        </div>
+    `
+
+    // create dialog element
+    const dialogElement = document.createElement('dialog')
+    dialogElement.id = randomId('html-dialog-')
+    dialogElement.className = css['dialog'] ?? ''
+    dialogElement.innerHTML = tpl
+    document.body.appendChild(dialogElement)
+    const dialog = document.querySelector(`#${dialogElement.id}`)
+
+    // add event listeners to buttons
+    buttons.forEach((button, index) => {
+        const buttonElement = dialog.querySelector(`button:nth-child(${index + 1})`)
+
+        const mouseEvents = ['onclick', 'oncontextmenu', 'ondblclick', 'onmousedown', 'onmouseenter', 'onmouseleave', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup']
+
+        // check if the button has an allowed mouse event and add it
+        Object.keys(button).forEach(mouseEvent => {
+            if (mouseEvents.includes(mouseEvent)) {
+                const eventType = mouseEvent.replace('on', '')
+                buttonElement.addEventListener(eventType, (event) => {
+                    button[mouseEvent].call(dialog, event)
+                })
+            }
+        })
+    })
+
+    return {
+        open() {
+            dialog.showModal()
+        },
+        close() {
+            dialog.close()
+        },
+        destroy() {
+            document.body.removeChild(dialog)
+        }
+    }
 }

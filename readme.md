@@ -2,13 +2,142 @@
 
 a simple html dialog for any frontend.
 
-## usage
+![img1.png](img1.png)
+![img2.png](img2.png)
+![img3.png](img3.png)
+
+## dialog usage
 
 ```html
+
 <script src="dist/html-dialog.min.js"></script>
 <script>
-    function openDialog() {
-        HtmlDialog.Dialog();
-    }
+    HtmlDialog.Dialog({
+        title: 'Dialog Title',
+        content: 'Dialog Content',
+        buttons: [
+            {
+                text: 'OK',
+                onclick: function () {
+                    console.log('OK');
+                }
+            },
+            {
+                text: 'Cancel',
+                onclick: function () {
+                    console.log('Cancel');
+                }
+            }
+        ]
+    }).open();
 </script>
 ```
+
+### dialog options
+
+| option  | type   | default | description    |
+|---------|--------|---------|----------------|
+| title   | string | ''      | dialog title   |
+| content | string | ''      | dialog content |
+| buttons | array  | []      | dialog buttons |
+| css     | object | {}      | dialog css     |
+
+#### buttons options
+
+| option        | type     | default | description     |
+|---------------|----------|---------|-----------------|
+| text          | string   | ''      | button text     |
+| onclick       | function | null    | button callback |
+| oncontextmenu | function | null    | button callback |
+| ondblclick    | function | null    | button callback |
+| ...           | function | null    | button callback |
+
+All valid mouse events are supported.
+
+https://www.w3schools.com/jsref/obj_mouseevent.asp
+
+The callback function will be called with the dialog instance as the `this` and the mouse event as the first argument.
+
+```
+{
+    onclick: function (event) {
+        console.log(event);
+        this.close();
+    }
+}
+```
+
+#### css options
+
+| option  | type   | default | description |
+|---------|--------|---------|-------------|
+| dialog  | string | ''      | title css   |
+| title   | string | ''      | title css   |
+| content | string | ''      | title css   |
+| buttons | string | ''      | title css   |
+
+The css options are class names that will be added to the dialog elements.
+
+```javascript
+HtmlDialog.Dialog({
+    title: 'Example',
+    content: 'Hello World!',
+    buttons: [
+        // ...
+    ],
+    css: {
+        dialog: 'dialog-class',
+        title: 'title-class',
+        content: 'content-class',
+        buttons: 'buttons-class',
+    }
+});
+```
+
+Will result in the following html:
+
+```html
+<dialog class="dialog-class">
+    <div class="title-class">Example</div>
+    <div class="content-class">Hello World!</div>
+    <div class="buttons-class">
+        <button>OK</button><button>Cancel</button>
+    </div>
+</dialog>
+```
+
+#### example styles with backdrop
+
+```css
+.dialog-class {
+    border: 1px solid red;
+    padding: 0;
+}
+
+.dialog-class::backdrop {
+    background-color: aqua;
+}
+
+.title-class {
+    background-color: #000;
+    color: #fff;
+}
+
+.content-class {
+    background-color: yellow;
+    color: #000;
+}
+
+.buttons-class {
+    padding: 10px;
+    text-align: right;
+}
+```
+
+### dialog methods
+
+| method  | description            |
+|---------|------------------------|
+| open    | open dialog            |
+| close   | close dialog           |
+| destroy | remove dialog from DOM |

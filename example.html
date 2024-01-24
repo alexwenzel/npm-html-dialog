@@ -5,15 +5,116 @@
 <body>
 <h1>Example</h1>
 <div>
-    <button onclick="openDialog()">click me</button>
-    <button>meow</button>
+    <button onclick="simpleDialog.open()">simple dialog open</button>
+    <button onclick="manyButtonsDialog.open()">dialog with many buttons open</button>
+    <button onclick="styledDialog.open()">styled dialog</button>
 </div>
 
 <script src="dist/html-dialog.min.js"></script>
 <script>
-    function openDialog() {
-        HtmlDialog.Dialog();
-    }
+
+    let simpleDialog = HtmlDialog.Dialog({
+        title: 'Example',
+        content: 'Hello World!',
+        buttons: [
+            {
+                text: 'OK',
+                onclick: function () {
+                    alert('OK');
+                }
+            },
+            {
+                text: 'Cancel',
+                onclick: function () {
+                    alert('Cancel');
+                    this.close();
+                }
+            }
+        ]
+    });
+
+    let manyButtonsDialog = HtmlDialog.Dialog({
+        title: 'Example',
+        content: 'Hello World!',
+        buttons: [
+            {
+                text: 'OK',
+                onclick: function () {
+                    this.close();
+                }
+            },
+            {
+                text: 'Cancel',
+                onclick: function () {
+                    this.close();
+                }
+            },
+            {
+                text: 'Close',
+                onclick: function () {
+                    this.close();
+                }
+            },
+            {
+                text: 'Save',
+                onclick: function () {
+                    this.close();
+                }
+            },
+            {
+                text: 'Delete',
+                onclick: function () {
+                    this.close();
+                }
+            }
+        ]
+    });
+
+    let styledDialog = HtmlDialog.Dialog({
+        title: 'Example',
+        content: 'Hello World!',
+        buttons: [
+            {
+                text: 'OK',
+                onclick: function () {
+                    this.close();
+                }
+            },
+            {
+                text: 'Cancel',
+                onclick: function () {
+                    this.close();
+                }
+            }
+        ],
+        css: {
+            dialog: 'dialog-class',
+            title: 'title-class',
+            content: 'content-class',
+            buttons: 'buttons-class',
+        }
+    });
 </script>
+<style>
+    .dialog-class {
+        border: 1px solid red;
+        padding: 0;
+    }
+    .dialog-class::backdrop {
+        background-color: aqua;
+    }
+    .title-class {
+        background-color: #000;
+        color: #fff;
+    }
+    .content-class {
+        background-color: yellow;
+        color: #000;
+    }
+    .buttons-class {
+        padding: 10px;
+        text-align: right;
+    }
+</style>
 </body>
 </html>
