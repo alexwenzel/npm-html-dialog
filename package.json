@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "watch": "rollup -c -w",
-    "build": "NODE_ENV=production rollup -c"
+    "build": "NODE_ENV=production rollup -c",
+    "build:patch": "npm run build && npm version patch && npm publish"
   },
   "repository": {
     "type": "git",
