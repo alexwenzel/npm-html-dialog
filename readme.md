@@ -1,12 +1,13 @@
 # html dialog
 
-a simple html dialog for any frontend.
+a simple html dialog for any frontend. 
+based on the [html dialog](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) element.
 
-![img1.png](img1.png)
-![img2.png](img2.png)
-![img3.png](img3.png)
+<img alt="img1.png" src="img1.png" width="200"/>
+<img alt="img2.png" src="img2.png" width="200"/>
+<img alt="img3.png" src="img3.png" width="200"/>
 
-## dialog usage
+## dialog installation & usage
 
 ```html
 
