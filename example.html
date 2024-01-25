@@ -1,6 +1,37 @@
 <html lang="en">
 <head>
     <title>Html Dialog - Example</title>
+    <style>
+        .dialog-class {
+            border: 1px solid red;
+            padding: 0;
+        }
+
+        .dialog-class::backdrop {
+            background-color: aqua;
+        }
+
+        .title-class {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .content-class {
+            background-color: yellow;
+            color: #000;
+        }
+
+        .buttons-class {
+            padding: 10px;
+            text-align: right;
+        }
+
+        .ok-button-class {
+            background-color: green;
+            color: #fff;
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body>
 <h1>Example</h1>
@@ -119,36 +150,5 @@
         appendTo: document.querySelector('h1')
     });
 </script>
-<style>
-    .dialog-class {
-        border: 1px solid red;
-        padding: 0;
-    }
-
-    .dialog-class::backdrop {
-        background-color: aqua;
-    }
-
-    .title-class {
-        background-color: #000;
-        color: #fff;
-    }
-
-    .content-class {
-        background-color: yellow;
-        color: #000;
-    }
-
-    .buttons-class {
-        padding: 10px;
-        text-align: right;
-    }
-
-    .ok-button-class {
-        background-color: green;
-        color: #fff;
-        margin-right: 10px;
-    }
-</style>
 </body>
 </html>

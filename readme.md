@@ -3,9 +3,9 @@
 a simple html dialog for any frontend.
 based on the [html dialog](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) element.
 
-<img alt="img1.png" src="img1.png" style="display: inline"  width="200"/>
-<img alt="img2.png" src="img2.png" style="display: inline"  width="200"/>
-<img alt="img3.png" src="img3.png" style="display: inline"  width="200"/>
+<img alt="img1.png" src="img1.png" width="200"/>
+<img alt="img2.png" src="img2.png" width="200"/>
+<img alt="img3.png" src="img3.png" width="200"/>
 
 ## dialog installation & usage
 
@@ -35,6 +35,8 @@ based on the [html dialog](https://developer.mozilla.org/en-US/docs/Web/HTML/Ele
     dialog.open();
 </script>
 ```
+
+For more examples, see the [example.html](example.html) file.
 
 ## dialog methods
 
