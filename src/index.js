@@ -5,7 +5,7 @@
  * @param {Object} classNames
  * @constructor
  */
-export function Dialog({title, content, buttons, classNames = {dialog: '', title: '', content: '', buttons: ''}}) {
+export default function Dialog({title, content, buttons, classNames = {dialog: '', title: '', content: '', buttons: ''}}) {
 
     // check if all parameters are passed
     if (!title || !content || !buttons) {
