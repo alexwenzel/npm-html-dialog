@@ -3,9 +3,9 @@
 a simple html dialog for any frontend.
 based on the [html dialog](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) element.
 
-<img alt="img1.png" src="img1.png" width="200"/>
-<img alt="img2.png" src="img2.png" width="200"/>
-<img alt="img3.png" src="img3.png" width="200"/>
+<img alt="img1.png" src="img1.png" style="display: inline"  width="200"/>
+<img alt="img2.png" src="img2.png" style="display: inline"  width="200"/>
+<img alt="img3.png" src="img3.png" style="display: inline"  width="200"/>
 
 ## dialog installation & usage
 
@@ -13,7 +13,7 @@ based on the [html dialog](https://developer.mozilla.org/en-US/docs/Web/HTML/Ele
 
 <script src="dist/html-dialog.min.js"></script>
 <script>
-    HtmlDialog.Dialog({
+    var dialog = HtmlDialog.Dialog({
         title: 'Dialog Title',
         content: 'Dialog Content',
         buttons: [
@@ -30,31 +30,68 @@ based on the [html dialog](https://developer.mozilla.org/en-US/docs/Web/HTML/Ele
                 }
             }
         ]
-    }).open();
+    }).create();
+
+    dialog.open();
 </script>
 ```
 
-### dialog methods
+## dialog methods
 
-| method  | description            |
-|---------|------------------------|
-| open    | open dialog            |
-| close   | close dialog           |
-| destroy | remove dialog from DOM |
+```
+var dialog = HtmlDialog.Dialog({...});
 
-### dialog options
+dialog.create();
+dialog.open();
+dialog.close();
+dialog.destroy();
+```
 
-| option     | type   | default | description                            |
-|------------|--------|---------|----------------------------------------|
-| title      | string | ''      | dialog title                           |
-| content    | string | ''      | dialog content                         |
-| buttons    | array  | []      | dialog buttons, see buttons option     |
-| classNames | object | {}      | dialog css classnames, see css options |
+| method    | description            | return          |
+|-----------|------------------------|-----------------|
+| create()  | adds dialog to DOM     | dialog instance |
+| open()    | open dialog            | dialog instance |
+| close()   | close dialog           | dialog instance |
+| destroy() | remove dialog from DOM | void            |
 
-### buttons options
+### .create()
+
+You can pass an optional parameter to the `create()` method to specify the parent element.
 
 ```javascript
+var dialog = HtmlDialog.Dialog({...});
+dialog.create({
+    appendTo: document.getElementById('my-dialog-container')
+});
+```
+
+## dialog options
+
+```
+HtmlDialog.Dialog({
+    title: 'Dialog Title',
+    content: 'Dialog Content',
+    buttons: [
+        // ...
+    ],
+    classNames: {
+        // ...
+    }
+})
+```
+
+| option     | type   | default  | description                                     |
+|------------|--------|----------|-------------------------------------------------|
+| title      | string | required | dialog title                                    |
+| content    | string | required | dialog content                                  |
+| buttons    | array  | required | dialog buttons, see "buttons option"            |
+| classNames | object | {}       | dialog css classnames, see "classNames options" |
+
+## buttons options
+
+```
 {
+    ...
     buttons: [
         {
             text: 'OK',
@@ -66,6 +103,7 @@ based on the [html dialog](https://developer.mozilla.org/en-US/docs/Web/HTML/Ele
             }
         }
     ]
+    ...
 }
 ```
 
@@ -84,16 +122,9 @@ https://www.w3schools.com/jsref/obj_mouseevent.asp
 
 The callback function will be called with the dialog instance as the `this` and the mouse event as the first argument.
 
-### css options
+### classNames options
 
-| option  | type   | default | description |
-|---------|--------|---------|-------------|
-| dialog  | string | ''      | title css   |
-| title   | string | ''      | title css   |
-| content | string | ''      | title css   |
-| buttons | string | ''      | title css   |
-
-The css options are class names that will be added to the dialog elements.
+This option allows you to add custom css classnames to the dialog.
 
 ```javascript
 HtmlDialog.Dialog({
@@ -111,7 +142,7 @@ HtmlDialog.Dialog({
 });
 ```
 
-Will result in the following html:
+The above code will result in the following html:
 
 ```html
 
@@ -125,7 +156,14 @@ Will result in the following html:
 </dialog>
 ```
 
-#### example styles with backdrop
+| option  | type   | default | description |
+|---------|--------|---------|-------------|
+| dialog  | string | ''      | title css   |
+| title   | string | ''      | title css   |
+| content | string | ''      | title css   |
+| buttons | string | ''      | title css   |
+
+example styles with backdrop:
 
 ```css
 .dialog-class {
