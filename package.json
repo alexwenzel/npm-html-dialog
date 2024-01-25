@@ -2,7 +2,7 @@
   "name": "html-dialog",
   "version": "0.0.5",
   "description": "a simple native html dialog with vanilla javascript",
-  "main": "index.js",
+  "module": "dist/html-dialog.esm.js",
   "scripts": {
     "watch": "rollup -c -w",
     "build": "NODE_ENV=production rollup -c",
