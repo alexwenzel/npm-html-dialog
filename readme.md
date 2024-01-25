@@ -9,6 +9,8 @@ based on the [html dialog](https://developer.mozilla.org/en-US/docs/Web/HTML/Ele
 
 ## dialog installation & usage
 
+### installation in browser
+
 ```html
 
 <script src="dist/html-dialog.min.js"></script>
@@ -37,6 +39,14 @@ based on the [html dialog](https://developer.mozilla.org/en-US/docs/Web/HTML/Ele
 ```
 
 For more examples, see the [example.html](example.html) file.
+
+### installation with npm
+
+```
+import HtmlDialog from 'html-dialog/dist/html-dialog.esm.js';
+
+HtmlDialog.Dialog({...});
+```
 
 ## dialog methods
 

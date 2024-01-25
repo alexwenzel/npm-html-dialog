@@ -5,7 +5,7 @@ import { terser } from 'rollup-plugin-terser';
 
 const production = process.env.NODE_ENV === 'production';
 
-export default {
+export default [{
     input: 'src/index.js',
     output: {
         file: 'dist/html-dialog.min.js',
@@ -21,4 +21,19 @@ export default {
         }),
         production && terser()
     ],
-};
+}, {
+    input: 'src/index.js',
+    output: {
+        file: 'dist/html-dialog.esm.js',
+        format: 'esm',
+    },
+    plugins: [
+        resolve(),
+        commonjs(),
+        babel({
+            exclude: 'node_modules/**',
+            presets: ['@babel/preset-env'],
+        }),
+        production && terser()
+    ],
+}];
