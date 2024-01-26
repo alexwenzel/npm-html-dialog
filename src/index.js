@@ -67,6 +67,15 @@ export const Dialog = ({title, content, buttons, classNames = {dialog: '', title
         },
         open() {
             dialog.showModal()
+
+            // check for focus button
+            buttons.forEach((button, index) => {
+                if (button.focus && button.focus === true) {
+                    const buttonElement = dialog.querySelector(`button:nth-child(${index + 1})`)
+                    buttonElement.focus({focusVisible: true})
+                }
+            })
+
             return this
         },
         close() {

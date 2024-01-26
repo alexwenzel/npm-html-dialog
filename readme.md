@@ -124,6 +124,7 @@ HtmlDialog.Dialog({
         {
             text: 'OK',
             type: 'button',
+            focus: true,
             classNames: 'btn btn-primary',
             onclick: function (mouseevent) {
                 console.log(mouseevent);
@@ -139,6 +140,7 @@ HtmlDialog.Dialog({
 |---------------|----------|----------|-------------------------------------------|
 | text          | string   | required | button text                               |
 | type          | string   | 'button' | button type. can be submit, button, reset |
+| focus         | boolean  | false    | focus button on dialog open               |
 | classNames    | string   | ''       | button css classnames                     |
 | onclick       | function | null     | button callback                           |
 | oncontextmenu | function | null     | button callback                           |
