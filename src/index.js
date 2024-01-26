@@ -51,7 +51,7 @@ export const Dialog = ({title, content, buttons, classNames = {dialog: '', title
                     if (mouseEvents.includes(mouseEvent)) {
                         const eventType = mouseEvent.replace('on', '')
                         buttonElement.addEventListener(eventType, (event) => {
-                            button[mouseEvent].call(dialog, event)
+                            button[mouseEvent].call(this, event)
                         })
                     }
                 })
