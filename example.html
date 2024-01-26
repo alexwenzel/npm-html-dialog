@@ -163,7 +163,7 @@
                 text: 'OK',
                 type: 'submit',
                 onclick: function () {
-                    let value = this.querySelector('input[name="value"]').value;
+                    let value = this.getForm().querySelector('input[name="value"]').value;
                     if (value) {
                         console.log(value);
                         this.close();
