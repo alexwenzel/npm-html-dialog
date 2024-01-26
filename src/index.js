@@ -5,26 +5,24 @@
  * @param {Object} classNames
  * @constructor
  */
-export default function Dialog({title, content, buttons, classNames = {dialog: '', title: '', content: '', buttons: ''}}) {
+export const Dialog = ({title, content, buttons, classNames = {dialog: '', title: '', content: '', buttons: ''}}) => {
 
     // check if all parameters are passed
     if (!title || !content || !buttons) {
         throw new Error('Missing parameters')
     }
 
-    const randomId = (prefix) => {
-        return prefix + Math.random().toString(36).substr(2, 9)
-    }
-
     const tpl = `
+    <form method="dialog">
         <div class="${classNames['title']}">${title}</div>
         <div class="${classNames['content']}">${content}</div>
         <div class="${classNames['buttons']}">
-            ${buttons.map(button => `<button class="${button.classNames}">${button.text}</button>`).join('')}
+        ${buttons.map(button => `<button type="${button.type}" class="${button.classNames}">${button.text}</button>`).join('')}
         </div>
+    </form>
     `
 
-    let dialog;
+    let dialog, form;
     const mouseEvents = ['onclick', 'oncontextmenu', 'ondblclick', 'onmousedown', 'onmouseenter', 'onmouseleave', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup']
 
     return {
@@ -32,7 +30,7 @@ export default function Dialog({title, content, buttons, classNames = {dialog: '
 
             // create dialog element
             const dialogElement = document.createElement('dialog')
-            dialogElement.id = randomId('html-dialog-')
+            dialogElement.id = 'html-dialog-' + Math.random().toString(36).substr(2, 9)
             dialogElement.className = classNames['dialog'] ?? ''
             dialogElement.innerHTML = tpl
 
@@ -59,6 +57,12 @@ export default function Dialog({title, content, buttons, classNames = {dialog: '
                 })
             })
 
+            // add event listener to form
+            form = dialogElement.querySelector('form')
+            form.addEventListener('submit', function (event) {
+                event.preventDefault()
+            })
+
             return this
         },
         open() {
@@ -72,6 +76,12 @@ export default function Dialog({title, content, buttons, classNames = {dialog: '
         destroy() {
             document.body.removeChild(dialog)
             delete this
+        },
+        getDialog() {
+            return dialog
+        },
+        getForm() {
+            return form
         }
     }
 }

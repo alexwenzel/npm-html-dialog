@@ -34,14 +34,17 @@
     </style>
 </head>
 <body>
-<h1>Example</h1>
 
-<div>
-    <button onclick="simpleDialog.open()">simple dialog open</button>
-    <button onclick="manyButtonsDialog.open()">dialog with many buttons open</button>
-    <button onclick="styledDialog.open()">styled dialog</button>
-    <button onclick="appendDialog.open()">append dialog</button>
-</div>
+<article>
+    <h1>Dialog</h1>
+    <div>
+        <button onclick="simpleDialog.open()">simple dialog open</button>
+        <button onclick="manyButtonsDialog.open()">dialog with many buttons open</button>
+        <button onclick="styledDialog.open()">styled dialog</button>
+        <button onclick="appendDialog.open()">append dialog</button>
+        <button onclick="promptDialog.open()">prompt dialog</button>
+    </div>
+</article>
 
 <script src="dist/html-dialog.min.js"></script>
 <script>
@@ -129,7 +132,7 @@
         }
     }).create();
 
-    var appendDialog = HtmlDialog.Dialog({
+    let appendDialog = HtmlDialog.Dialog({
         title: 'Example',
         content: 'Hello World!',
         buttons: [
@@ -149,6 +152,34 @@
     }).create({
         appendTo: document.querySelector('h1')
     });
+
+    let promptDialog = HtmlDialog.Dialog({
+        title: 'Example',
+        content: `<div>Please give me a value:</div><input type="text" required name="value">`,
+        buttons: [
+            {
+                text: 'OK',
+                type: 'submit',
+                onclick: function () {
+                    let value = this.querySelector('input[name="value"]').value;
+                    if (value) {
+                        console.log(value);
+                        this.close();
+                    }
+                }
+            },
+            {
+                text: 'Reset',
+                type: 'reset',
+            },
+            {
+                text: 'Cancel',
+                onmouseup: function () {
+                    this.close();
+                }
+            }
+        ]
+    }).create();
 </script>
 </body>
 </html>

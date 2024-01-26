@@ -3,9 +3,10 @@
 a simple html dialog for any frontend.
 based on the [html dialog](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) element.
 
-<img alt="img1.png" src="img1.png" width="200"/>
-<img alt="img2.png" src="img2.png" width="200"/>
-<img alt="img3.png" src="img3.png" width="200"/>
+<img src="img1.png" width="200"/>
+<img src="img2.png" width="200"/>
+<img src="img3.png" width="200"/>
+<img src="img4.png" width="200"/>
 
 ## dialog installation & usage
 
@@ -43,7 +44,7 @@ For more examples, see the [example.html](example.html) file.
 ### installation with npm
 
 ```
-import HtmlDialog from 'html-dialog/dist/html-dialog.esm.js';
+import Dialog from 'html-dialog/dist/html-dialog.esm.js';
 
 HtmlDialog.Dialog({...});
 ```
@@ -57,14 +58,18 @@ dialog.create();
 dialog.open();
 dialog.close();
 dialog.destroy();
+dialog.getDialog();
+dialog.getForm();
 ```
 
-| method    | description            | return          |
-|-----------|------------------------|-----------------|
-| create()  | adds dialog to DOM     | dialog instance |
-| open()    | open dialog            | dialog instance |
-| close()   | close dialog           | dialog instance |
-| destroy() | remove dialog from DOM | void            |
+| method      | description            | return                     |
+|-------------|------------------------|----------------------------|
+| create()    | adds dialog to DOM     | dialog instance            |
+| open()      | open dialog            | dialog instance            |
+| close()     | close dialog           | dialog instance            |
+| destroy()   | remove dialog from DOM | void                       |
+| getDialog() | get dialog element     | dialog element             |
+| getForm()   | get form element       | form element inside dialog |
 
 ### .create()
 
@@ -95,7 +100,7 @@ HtmlDialog.Dialog({
 | option     | type   | default  | description                                     |
 |------------|--------|----------|-------------------------------------------------|
 | title      | string | required | dialog title                                    |
-| content    | string | required | dialog content                                  |
+| content    | string | required | dialog content, can be any html / string        |
 | buttons    | array  | required | dialog buttons, see "buttons option"            |
 | classNames | object | {}       | dialog css classnames, see "classNames options" |
 
@@ -107,6 +112,7 @@ HtmlDialog.Dialog({
     buttons: [
         {
             text: 'OK',
+            type: 'button',
             classNames: 'btn btn-primary',
             onclick: function (event) {
                 console.log('OK');
@@ -119,14 +125,15 @@ HtmlDialog.Dialog({
 }
 ```
 
-| option        | type     | default | description           |
-|---------------|----------|---------|-----------------------|
-| text          | string   | ''      | button text           |
-| classNames    | string   | ''      | button css classnames |
-| onclick       | function | null    | button callback       |
-| oncontextmenu | function | null    | button callback       |
-| ondblclick    | function | null    | button callback       |
-| ...           | function | null    | button callback       |
+| option        | type     | default  | description                               |
+|---------------|----------|----------|-------------------------------------------|
+| text          | string   | ''       | button text                               |
+| type          | string   | 'button' | button type. can be submit, button, reset |
+| classNames    | string   | ''       | button css classnames                     |
+| onclick       | function | null     | button callback                           |
+| oncontextmenu | function | null     | button callback                           |
+| ondblclick    | function | null     | button callback                           |
+| ...           | function | null     | button callback                           |
 
 All valid mouse events are supported.
 
@@ -145,7 +152,7 @@ HtmlDialog.Dialog({
     buttons: [
         // ...
     ],
-    css: {
+    classNames: {
         dialog: 'dialog-class',
         title: 'title-class',
         content: 'content-class',
@@ -159,21 +166,23 @@ The above code will result in the following html:
 ```html
 
 <dialog class="dialog-class">
-    <div class="title-class">Example</div>
-    <div class="content-class">Hello World!</div>
-    <div class="buttons-class">
-        <button>OK</button>
-        <button>Cancel</button>
-    </div>
+    <form>
+        <div class="title-class">Example</div>
+        <div class="content-class">Hello World!</div>
+        <div class="buttons-class">
+            <button>OK</button>
+            <button>Cancel</button>
+        </div>
+    </form>
 </dialog>
 ```
 
-| option  | type   | default | description |
-|---------|--------|---------|-------------|
-| dialog  | string | ''      | title css   |
-| title   | string | ''      | title css   |
-| content | string | ''      | title css   |
-| buttons | string | ''      | title css   |
+| option  | type   | default | description         |
+|---------|--------|---------|---------------------|
+| dialog  | string | ''      | dialog css classes  |
+| title   | string | ''      | title css classes   |
+| content | string | ''      | content css classes |
+| buttons | string | ''      | title css           |
 
 example styles with backdrop:
 
@@ -186,19 +195,35 @@ example styles with backdrop:
 .dialog-class::backdrop {
     background-color: aqua;
 }
+```
+### dialog / prompt example with text input and form validation
 
-.title-class {
-    background-color: #000;
-    color: #fff;
-}
-
-.content-class {
-    background-color: yellow;
-    color: #000;
-}
-
-.buttons-class {
-    padding: 10px;
-    text-align: right;
-}
+```javascript
+HtmlDialog.Dialog({
+    title: 'Example',
+    content: `<div>Please give me a value:</div><input type="text" name="value" required>`,
+    buttons: [
+        {
+            text: 'OK',
+            type: 'submit',
+            onclick: function () {
+                let value = this.querySelector('input[name="value"]').value;
+                if (value) {
+                    console.log(value);
+                    this.close();
+                }
+            }
+        },
+        {
+            text: 'Reset',
+            type: 'reset',
+        },
+        {
+            text: 'Cancel',
+            onmouseup: function () {
+                this.close();
+            }
+        }
+    ]
+}).create();
 ```
