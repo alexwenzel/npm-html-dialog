@@ -1,4 +1,4 @@
-# html dialog
+# html-dialog
 
 a simple html dialog for any frontend.
 based on the [html dialog](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) element.
@@ -13,7 +13,6 @@ based on the [html dialog](https://developer.mozilla.org/en-US/docs/Web/HTML/Ele
 ### installation in browser
 
 ```html
-
 <script src="dist/html-dialog.min.js"></script>
 <script>
     var dialog = HtmlDialog.Dialog({
@@ -43,11 +42,22 @@ For more examples, see the [example.html](example.html) file.
 
 ### installation with npm
 
-```
-import Dialog from 'html-dialog/dist/html-dialog.esm.js';
+install with npm:
 
-HtmlDialog.Dialog({...});
 ```
+npm i html-dialog
+```
+
+then import the dialog:
+
+```javascript
+import {Dialog} from 'html-dialog/dist/html-dialog.esm'
+
+const myDialog = Dialog({...}).create()
+myDialog.open()
+```
+
+For more examples, see the [example.html](example.html) file.
 
 ## dialog methods
 
@@ -84,7 +94,7 @@ dialog.create({
 
 ## dialog options
 
-```
+```javascript
 HtmlDialog.Dialog({
     title: 'Dialog Title',
     content: 'Dialog Content',
@@ -106,7 +116,7 @@ HtmlDialog.Dialog({
 
 ## buttons options
 
-```
+```javascript
 {
     ...
     buttons: [
@@ -114,9 +124,8 @@ HtmlDialog.Dialog({
             text: 'OK',
             type: 'button',
             classNames: 'btn btn-primary',
-            onclick: function (event) {
-                console.log('OK');
-                console.log(event);
+            onclick: function (mouseevent) {
+                console.log(mouseevent);
                 this.close();
             }
         }
@@ -136,10 +145,9 @@ HtmlDialog.Dialog({
 | ...           | function | null     | button callback                           |
 
 All valid mouse events are supported.
+See: https://www.w3schools.com/jsref/obj_mouseevent.asp
 
-https://www.w3schools.com/jsref/obj_mouseevent.asp
-
-The callback function will be called with the dialog instance as the `this` and the mouse event as the first argument.
+The callback function will be called with the dialog instance as `this` and the mouseevent as the first argument.
 
 ### classNames options
 
@@ -164,7 +172,6 @@ HtmlDialog.Dialog({
 The above code will result in the following html:
 
 ```html
-
 <dialog class="dialog-class">
     <form>
         <div class="title-class">Example</div>
@@ -225,5 +232,5 @@ HtmlDialog.Dialog({
             }
         }
     ]
-}).create();
+}).create().open();
 ```
