@@ -17,7 +17,7 @@ export const Dialog = ({title, content, buttons, classNames = {dialog: '', title
         <div class="${classNames['title']}">${title}</div>
         <div class="${classNames['content']}">${content}</div>
         <div class="${classNames['buttons']}">
-        ${buttons.map(button => `<button type="${button.type}" class="${button.classNames}">${button.text}</button>`).join('')}
+        ${buttons.map(button => `<button type="${button?.type ?? 'button'}" class="${button.classNames ?? ''}">${button.text}</button>`).join('')}
         </div>
     </form>
     `

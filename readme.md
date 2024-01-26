@@ -1,6 +1,6 @@
 # html-dialog
 
-a simple html dialog for any frontend.
+a simple but flexible html dialog for any frontend.
 based on the [html dialog](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) element.
 
 <img src="img1.png" width="200"/>
@@ -13,6 +13,7 @@ based on the [html dialog](https://developer.mozilla.org/en-US/docs/Web/HTML/Ele
 ### installation in browser
 
 ```html
+
 <script src="dist/html-dialog.min.js"></script>
 <script>
     var dialog = HtmlDialog.Dialog({
@@ -118,7 +119,7 @@ HtmlDialog.Dialog({
 
 ```javascript
 {
-    ...
+...
     buttons: [
         {
             text: 'OK',
@@ -130,13 +131,13 @@ HtmlDialog.Dialog({
             }
         }
     ]
-    ...
+...
 }
 ```
 
 | option        | type     | default  | description                               |
 |---------------|----------|----------|-------------------------------------------|
-| text          | string   | ''       | button text                               |
+| text          | string   | required | button text                               |
 | type          | string   | 'button' | button type. can be submit, button, reset |
 | classNames    | string   | ''       | button css classnames                     |
 | onclick       | function | null     | button callback                           |
@@ -172,6 +173,7 @@ HtmlDialog.Dialog({
 The above code will result in the following html:
 
 ```html
+
 <dialog class="dialog-class">
     <form>
         <div class="title-class">Example</div>
@@ -203,6 +205,7 @@ example styles with backdrop:
     background-color: aqua;
 }
 ```
+
 ### dialog / prompt example with text input and form validation
 
 ```javascript
