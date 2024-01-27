@@ -1,6 +1,6 @@
 {
   "name": "html-dialog",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "a simple native html dialog with vanilla javascript",
   "module": "dist/html-dialog.esm.js",
   "scripts": {
