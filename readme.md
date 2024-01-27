@@ -73,14 +73,14 @@ dialog.getDialog();
 dialog.getForm();
 ```
 
-| method      | description            | return                     |
-|-------------|------------------------|----------------------------|
-| create()    | adds dialog to DOM     | dialog instance            |
-| open()      | open dialog            | dialog instance            |
-| close()     | close dialog           | dialog instance            |
-| destroy()   | remove dialog from DOM | void                       |
-| getDialog() | get dialog element     | dialog element             |
-| getForm()   | get form element       | form element inside dialog |
+| method      | description            | return                                                                                 |
+|-------------|------------------------|----------------------------------------------------------------------------------------|
+| create()    | adds dialog to DOM     | dialog instance                                                                        |
+| open()      | open dialog            | dialog instance                                                                        |
+| close()     | close dialog           | dialog instance                                                                        |
+| destroy()   | remove dialog from DOM | void                                                                                   |
+| getDialog() | get dialog element     | dialog [element](https://developer.mozilla.org/en-US/docs/Web/API/Element)             |
+| getForm()   | get form element       | form [element](https://developer.mozilla.org/en-US/docs/Web/API/Element) inside dialog |
 
 ### .create()
 
@@ -150,7 +150,28 @@ HtmlDialog.Dialog({
 All valid mouse events are supported.
 See: https://www.w3schools.com/jsref/obj_mouseevent.asp
 
-The callback function will be called with the dialog instance as `this` and the mouseevent as the first argument.
+The callback function will be called with the dialog instance as `this` and the [mouseevent](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent) as the first argument.
+
+```javascript
+onclick: function (mouseevent) {
+    console.log(mouseevent);
+    this.close();
+}
+```
+
+It's possible to add multiple callbacks to a button:
+
+```javascript
+{
+    text: 'OK',
+    onclick: function () {
+        console.log('onclick');
+    },
+    oncontextmenu: function () {
+        console.log('contextmenu');
+    }
+}
+```
 
 ### classNames options
 
@@ -219,7 +240,7 @@ HtmlDialog.Dialog({
             text: 'OK',
             type: 'submit',
             onclick: function () {
-                let value = this.querySelector('input[name="value"]').value;
+                let value = this.getForm().querySelector('input[name="value"]').value;
                 if (value) {
                     console.log(value);
                     this.close();
