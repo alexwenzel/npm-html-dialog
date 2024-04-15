@@ -1,7 +1,9 @@
 # html-dialog
 
-a simple but flexible html dialog for any frontend.
+a simple but flexible html dialog in javascript for any frontend.
 based on the [html dialog](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) element.
+
+size of the minified module: 1.8kb
 
 <img src="img1.png" width="200"/>
 <img src="img2.png" width="200"/>
