@@ -100,9 +100,10 @@
                 }
             },
             {
-                text: 'Delete',
+                text: 'Destroy',
                 onclick: function () {
                     this.close();
+                    this.destroy();
                 }
             }
         ]
@@ -149,7 +150,15 @@
                 onclick: function () {
                     this.close();
                 }
+            },
+          {
+            text: 'Destroy with dialog parameter',
+            onclick: function (event, dialog) {
+              console.log(event);
+              dialog.close();
+              dialog.destroy();
             }
+          }
         ],
     }).create({
         appendTo: document.querySelector('h1')

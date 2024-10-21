@@ -26,6 +26,16 @@ export const Dialog = ({title, content, buttons, classNames = {dialog: '', title
     const mouseEvents = ['onclick', 'oncontextmenu', 'ondblclick', 'onmousedown', 'onmouseenter', 'onmouseleave', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup']
 
     return {
+        /**
+         * Create dialog instance and append it to the DOM.
+         * @param {Object} options
+         * @param {HTMLElement} options.appendTo
+         * @param {String} options.title - dialog title
+         * @param {String} options.content - dialog content, can be any html / string
+         * @param {String} options.classNames - dialog css classnames, see "classNames parameter"
+         * @param {Array} options.buttons - dialog buttons, see "buttons parameter"
+         * @return {Dialog}
+         */
         create(options = {appendTo: null}) {
 
             // create dialog element
@@ -51,7 +61,7 @@ export const Dialog = ({title, content, buttons, classNames = {dialog: '', title
                     if (mouseEvents.includes(mouseEvent)) {
                         const eventType = mouseEvent.replace('on', '')
                         buttonElement.addEventListener(eventType, (event) => {
-                            button[mouseEvent].call(this, event)
+                            button[mouseEvent].call(this, event, this)
                         })
                     }
                 })
@@ -65,30 +75,56 @@ export const Dialog = ({title, content, buttons, classNames = {dialog: '', title
 
             return this
         },
+        /**
+         * Open dialog.
+         * @return {Dialog}
+         */
         open() {
-            dialog.showModal()
+            try {
+                dialog.showModal()
 
-            // check for focus button
-            buttons.forEach((button, index) => {
-                if (button.focus && button.focus === true) {
-                    const buttonElement = dialog.querySelector(`button:nth-child(${index + 1})`)
-                    buttonElement.focus({focusVisible: true})
-                }
-            })
+                // check for button focus
+                buttons.forEach((button, index) => {
+                    if (button.focus && button.focus === true) {
+                        const buttonElement = dialog.querySelector(`button:nth-child(${index + 1})`)
+                        buttonElement.focus({focusVisible: true})
+                    }
+                })
 
-            return this
+                return this
+            } catch (error) {
+                throw new Error('Dialog is not created or removed from DOM.')
+            }
         },
+        /**
+         * Close dialog
+         * @return {Dialog}
+         */
         close() {
             dialog.close()
             return this
         },
+        /**
+         * Destroy dialog
+         * @return {void}
+         */
         destroy() {
-            document.body.removeChild(dialog)
+            if (dialog && dialog.parentNode) {
+                dialog.parentNode.removeChild(dialog)
+            }
             delete this
         },
-        getDialog() {
+        /**
+         * Get dialog element
+         * @return {HTMLElement}
+         */
+        getDialog(Dialog) {
             return dialog
         },
+        /**
+         * Get the dialog form element
+         * @return {HTMLElement}
+         */
         getForm() {
             return form
         }

@@ -67,7 +67,7 @@ For more examples, see the [example.html](example.html) file.
 ```
 var dialog = HtmlDialog.Dialog({...});
 
-dialog.create();
+dialog.create(dialogOptions);
 dialog.open();
 dialog.close();
 dialog.destroy();
@@ -75,14 +75,14 @@ dialog.getDialog();
 dialog.getForm();
 ```
 
-| method      | description            | return                                                                                 |
-|-------------|------------------------|----------------------------------------------------------------------------------------|
-| create()    | adds dialog to DOM     | dialog instance                                                                        |
-| open()      | open dialog            | dialog instance                                                                        |
-| close()     | close dialog           | dialog instance                                                                        |
-| destroy()   | remove dialog from DOM | void                                                                                   |
-| getDialog() | get dialog element     | dialog [element](https://developer.mozilla.org/en-US/docs/Web/API/Element)             |
-| getForm()   | get form element       | form [element](https://developer.mozilla.org/en-US/docs/Web/API/Element) inside dialog |
+| method                | description            | return                                                                                 |
+|-----------------------|------------------------|----------------------------------------------------------------------------------------|
+| create(dialogOptions) | adds dialog to DOM     | dialog instance                                                                        |
+| open()                | open dialog            | dialog instance                                                                        |
+| close()               | close dialog           | dialog instance                                                                        |
+| destroy()             | remove dialog from DOM | void                                                                                   |
+| getDialog()           | get dialog element     | dialog [element](https://developer.mozilla.org/en-US/docs/Web/API/Element)             |
+| getForm()             | get form element       | form [element](https://developer.mozilla.org/en-US/docs/Web/API/Element) inside dialog |
 
 ### .create()
 
@@ -95,7 +95,7 @@ dialog.create({
 });
 ```
 
-## dialog options
+## dialog options parameter
 
 ```javascript
 HtmlDialog.Dialog({
@@ -110,18 +110,20 @@ HtmlDialog.Dialog({
 })
 ```
 
-| option     | type   | default  | description                                     |
-|------------|--------|----------|-------------------------------------------------|
-| title      | string | required | dialog title                                    |
-| content    | string | required | dialog content, can be any html / string        |
-| buttons    | array  | required | dialog buttons, see "buttons option"            |
-| classNames | object | {}       | dialog css classnames, see "classNames options" |
+| option     | type   | default  | description                                       |
+|------------|--------|----------|---------------------------------------------------|
+| title      | string | required | dialog title                                      |
+| content    | string | required | dialog content, can be any html / string          |
+| buttons    | array  | required | dialog buttons, see "buttons parameter"           |
+| classNames | object | {}       | dialog css classnames, see "classNames parameter" |
 
-## buttons options
+## buttons parameter
 
 ```javascript
 {
-...
+    title: 'Dialog Title',
+    content: 'Dialog Content',
+    ...
     buttons: [
         {
             text: 'OK',
@@ -134,7 +136,6 @@ HtmlDialog.Dialog({
             }
         }
     ]
-...
 }
 ```
 
@@ -175,7 +176,7 @@ It's possible to add multiple callbacks to a button:
 }
 ```
 
-### classNames options
+### classNames parameter
 
 This option allows you to add custom css classnames to the dialog.
 
