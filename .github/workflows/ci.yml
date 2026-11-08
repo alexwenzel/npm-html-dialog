@@ -1,0 +1,59 @@
+name: CI
+
+on:
+    push:
+        branches: [main]
+        tags: ['v*']
+    pull_request:
+
+permissions:
+    contents: read
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v5
+            - uses: actions/setup-node@v5
+              with:
+                  node-version-file: .nvmrc
+                  cache: npm
+            - run: npm ci
+            - run: npx playwright install --with-deps chromium
+            - run: npm run lint
+            - run: npm run typecheck
+            - run: npm test
+            - run: npm run build
+            - run: npm run size
+            - run: npx publint
+            - uses: actions/upload-artifact@v5
+              with:
+                  name: dist
+                  path: dist
+
+    release:
+        if: startsWith(github.ref, 'refs/tags/v')
+        needs: test
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write # create the GitHub release
+            id-token: write # npm trusted publishing + provenance
+        steps:
+            - uses: actions/checkout@v5
+            - uses: actions/setup-node@v5
+              with:
+                  node-version-file: .nvmrc
+                  registry-url: https://registry.npmjs.org
+            - uses: actions/download-artifact@v5
+              with:
+                  name: dist
+                  path: dist
+            - run: npm install -g npm@latest # trusted publishing needs npm >= 11.5
+            - run: npm publish --provenance --access public
+            - run: gh release create "$GITHUB_REF_NAME" dist/html-dialog.js dist/html-dialog.iife.js --generate-notes
+              env:
+                  GH_TOKEN: ${{ github.token }}

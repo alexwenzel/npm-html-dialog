@@ -1,0 +1,4 @@
+[
+    { "path": "dist/html-dialog.js", "limit": "2 kB" },
+    { "path": "dist/html-dialog.iife.js", "limit": "2 kB" }
+]

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>html-dialog demo</title>
+        <style>
+            body {
+                font-family: system-ui, sans-serif;
+                line-height: 1.5;
+                max-width: 40rem;
+                margin: 0 auto;
+                padding: 1rem;
+            }
+            button {
+                font: inherit;
+                padding: 0.5rem 1rem;
+                margin: 0 0.5rem 0.5rem 0;
+                cursor: pointer;
+            }
+            :focus-visible {
+                outline: 3px solid #0b57d0;
+                outline-offset: 2px;
+            }
+            dialog {
+                border: 0;
+                border-radius: 0.75rem;
+                padding: 1.5rem;
+                max-width: min(90vw, 28rem);
+                box-shadow: 0 10px 40px rgb(0 0 0 / 0.25);
+            }
+            dialog::backdrop {
+                background: rgb(0 40 80 / 0.5);
+            }
+            dialog label {
+                gap: 0.5rem;
+            }
+            dialog input {
+                font: inherit;
+                padding: 0.4rem 0.5rem;
+            }
+            dialog form > div:last-child {
+                margin-top: 1rem;
+                text-align: right;
+            }
+            dialog button {
+                margin: 0 0 0 0.5rem;
+            }
+            .fancy {
+                background: #fffdf5;
+            }
+            .fancy .title {
+                font-size: 1.25rem;
+                font-weight: 700;
+                margin-bottom: 0.5rem;
+            }
+            .primary {
+                background: #0b57d0;
+                color: #fff;
+                border: 0;
+                border-radius: 0.25rem;
+            }
+            @media (prefers-reduced-motion: no-preference) {
+                .fancy[open] {
+                    animation: pop 0.15s ease-out;
+                }
+            }
+            @keyframes pop {
+                from {
+                    opacity: 0;
+                    transform: scale(0.96);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <h1>html-dialog</h1>
+            <p>
+                Every dialog below closes with <kbd>Esc</kbd> unless noted. Focus returns to the button that
+                opened it.
+            </p>
+
+            <h2>Helpers</h2>
+            <p>
+                <button type="button" id="alert">alert()</button>
+                <button type="button" id="confirm">confirm()</button>
+                <button type="button" id="prompt">prompt()</button>
+            </p>
+
+            <h2>createDialog</h2>
+            <p>
+                <button type="button" id="styled">Styled, closes on backdrop click</button>
+                <button type="button" id="guarded">Guarded with beforeClose</button>
+                <button type="button" id="modeless">Non-modal</button>
+            </p>
+
+            <p role="status" id="result">No result yet.</p>
+        </main>
+
+        <script type="module">
+            import { alert, confirm, createDialog, prompt } from '../src/index.ts'
+
+            const result = document.getElementById('result')
+            const report = (text) => (result.textContent = text)
+            const on = (id, handler) => document.getElementById(id).addEventListener('click', handler)
+
+            on('alert', async () => {
+                await alert('Saved successfully.')
+                report('alert() dismissed.')
+            })
+
+            on('confirm', async () => {
+                report(`confirm() → ${await confirm('Delete this item?', { okText: 'Delete' })}`)
+            })
+
+            on('prompt', async () => {
+                report(
+                    `prompt() → ${JSON.stringify(await prompt('Your name?', { inputAttributes: { required: '' } }))}`,
+                )
+            })
+
+            on('styled', async () => {
+                const value = await createDialog({
+                    title: 'Styled dialog',
+                    content: 'Click the backdrop, press Esc or use a button.',
+                    closeOnBackdrop: true,
+                    destroyOnClose: true,
+                    classNames: { dialog: 'fancy', title: 'title' },
+                    buttons: [
+                        { text: 'Later', value: 'later' },
+                        { text: 'Got it', value: 'ok', className: 'primary', autofocus: true },
+                    ],
+                }).open()
+                report(`styled → ${JSON.stringify(value)}`)
+            })
+
+            on('guarded', async () => {
+                const input = Object.assign(document.createElement('input'), { required: true, name: 'code' })
+                const label = document.createElement('label')
+                label.append('Type "ok" to leave: ', input)
+                const value = await createDialog({
+                    title: 'Guarded dialog',
+                    content: label,
+                    destroyOnClose: true,
+                    beforeClose: (value) => value === '' || input.value === 'ok',
+                    buttons: [{ text: 'Leave', value: 'left' }],
+                }).open()
+                report(`guarded → ${JSON.stringify(value)}`)
+            })
+
+            on('modeless', async () => {
+                const value = await createDialog({
+                    title: 'Non-modal',
+                    content: 'The page behind stays usable.',
+                    modal: false,
+                    destroyOnClose: true,
+                    buttons: [{ text: 'Close', value: 'closed' }],
+                }).open()
+                report(`non-modal → ${JSON.stringify(value)}`)
+            })
+        </script>
+    </body>
+</html>
