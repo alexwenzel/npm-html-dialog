@@ -53,7 +53,7 @@ jobs:
                   name: dist
                   path: dist
             - run: npm install -g npm@latest # trusted publishing needs npm >= 11.5
-            - run: npm publish --provenance --access public
+            - run: npm publish --provenance --access public --ignore-scripts # dist/ comes from the tested artifact
             - run: gh release create "$GITHUB_REF_NAME" dist/html-dialog.js dist/html-dialog.iife.js --generate-notes
               env:
                   GH_TOKEN: ${{ github.token }}
